@@ -1,0 +1,21 @@
+<?php
+$title = 'Добавление фотографии';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<div id="gallery">
+    <div class="add-album">
+        <a href='<?=(!$backToAlbum)?$this->url('gallery'):$this->url('gallery',
+                array('action'=>'showAlbum', 'id' => $backToAlbum));?>'>Назад</a>
+    </div>
+    <div class="form">
+        <?php
+        $form = $this->form;
+        $form->setAttribute('action', $this->url('gallery', array('action' => 'uploadPicture')));
+        $form->prepare();
+        echo $this->form()->openTag($form);
+        echo $this->formCollection($form);
+        echo $this->form()->closeTag();
+        ?>
+    </div>
+</div>

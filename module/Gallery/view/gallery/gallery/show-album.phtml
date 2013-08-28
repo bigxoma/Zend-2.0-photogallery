@@ -1,0 +1,38 @@
+<?php
+$title = $album->title;
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<div id="gallery">
+    <div class="add-album">
+        <a href="<?php echo $this->url('gallery');?>">Вернуться в галерею</a> |
+        <a href="<?php echo $this->url('gallery', array('action'=>'uploadPicture','id'=>$album->id));?>">Добавить фотографию в альбом</a>
+    </div>
+    <?php foreach ($pictures as $picture) : ?>
+        <div class="preview">
+            <div class="panel">
+                <a href="<?php echo $this->url('gallery',
+                    array('action'=>'deletePicture', 'id' => $picture->id));?>">Удалить</a>
+            </div>
+            <div class="image">
+                <a href="<?php echo $this->url('gallery',
+                    array('action'=>'showPicture', 'id' => $picture->id));?>">
+                    <img src="../../upload/preview/<?=$picture->src;?>">
+                </a>
+            </div>
+            <div class="title"><?php echo $this->escapeHtml($picture->title);?></div>
+        </div>
+    <?php endforeach; ?>
+
+    <div style="clear: both;"></div>
+    <div class="description">
+        Описание альбома: "<?php echo $this->escapeHtml($album->description);?>" <br>
+        Имя фотографа: <?php echo $this->escapeHtml($album->author);?> <br>
+        <?=($album->mail!='')?"E-mail: $album->mail<br>":'';?>
+        <?=($album->phone!='')?"Телефон: $album->phone<br>":'';?>
+        Дата создания альбома: <?=date("d.m.Y в H:i",strtotime($album->created));?> <br>
+        <?=($album->update != NULL)?"Дата изменения информации альбома: ".date("d.m.Y в H:i",strtotime($album->update)).'<br>':'';?>
+        <?=($album->amount>0)?"Последнее фото загружено: ".date("d.m.Y в H:i",strtotime($album->added)):'<br>';?>
+    </div>
+</div>

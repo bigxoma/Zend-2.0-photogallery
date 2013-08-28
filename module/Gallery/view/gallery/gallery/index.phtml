@@ -1,0 +1,33 @@
+<?php
+$title = 'Фотоальбомы';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<div id="gallery">
+    <div class="add-album">
+        <a href="<?php echo $this->url('gallery', array('action'=>'addAlbum'));?>">Добавить новый альбом</a> |
+        <a href="<?php echo $this->url('gallery', array('action'=>'uploadPicture'));?>">Добавить фотографию в галерею</a>
+    </div>
+    <?php foreach ($albums as $album) : ?>
+    <div class="preview">
+        <div class="panel">
+            <a href="<?php echo $this->url('gallery',
+                array('action'=>'editAlbum', 'id' => $album->id));?>">Правка</a>
+           | <a href="<?php echo $this->url('gallery',
+                array('action'=>'deleteAlbum', 'id' => $album->id));?>">Удалить</a>
+        </div>
+        <div class="image">
+            <a href="<?php echo $this->url('gallery',
+                array('action'=>'showAlbum', 'id' => $album->id));?>">
+                <img src="../upload/preview/<?=($album->amount>0)?$album->preview:"picture.jpg";?>">
+            </a>
+        </div>
+        <div class="title"><?php echo $this->escapeHtml($album->title);?> (фото: <?=$album->amount;?>)</div>
+        <div class="added">
+            <?=($album->amount>0)?"Последнее фото загружено: ".date("d.m.Y в H:i",strtotime($album->added)):"";?>
+        </div>
+    </div>
+    <?php endforeach; ?>
+</div>
+<div style="clear: both;"></div>

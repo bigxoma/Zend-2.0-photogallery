@@ -1,0 +1,52 @@
+<?php
+$title = $album->title;
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?> / <?php echo $this->escapeHtml($picture->title);?></h1>
+
+<div id="gallery">
+    <div class="add-album">
+        <a href="<?php echo $this->url('gallery', array('action'=>'showAlbum','id'=>$album->id));?>">Вернуться в альбом</a> |
+        <a href="<?php echo $this->url('gallery', array('action'=>'deletePicture', 'id' => $picture->id));?>">Удалить фото</a>
+    </div>
+        <div class="show-picture">
+            <div class="view">
+                <div class="panel">
+                    <div class="prev">
+                        <?php if($ids['prev']): ?>
+                            <a href="<?=$this->url('gallery',array('action'=>'showPicture','id'=>$ids['prev']));?>">
+                                Предыдущее фото
+                            </a>
+                        <?php endif ?>
+                    </div>
+                    <?php if($ids['next']): ?>
+                        <div class="center">Для просмотра следующей фотографии, кликните по картинке</div>
+                    <?php endif ?>
+                    <div class="next">
+                        <?php if($ids['next']): ?>
+                            <a href="<?=$this->url('gallery',array('action'=>'showPicture','id'=>$ids['next']));?>">
+                                Следующее фото
+                            </a>
+                        <?php endif ?>
+                    </div>
+                </div>
+                <div class="image">
+                    <?php if($ids['next']): ?>
+                        <a href="<?=$this->url('gallery',array('action'=>'showPicture','id'=>$ids['next']));?>">
+                            <img src="../../upload/picture/<?=$picture->src;?>">
+                        </a>
+                    <?php else: ?>
+                        <img src="../../upload/picture/<?=$picture->src;?>">
+                    <?php endif ?>
+                </div>
+                <div class="description">
+                    Адрес фотосьемки: "<?php echo $this->escapeHtml($picture->address);?>" |
+                    Загружен: <?=date("d.m.Y в H:i",strtotime($picture->added));?> |
+                    <a href="../../upload/original/<?=$picture->src;?>" title="Откроется в новом окне" target="_blank">
+                        Открыть оригинал
+                    </a>
+                </div>
+                </div>
+        </div>
+</div>
+<div style="clear: both;"></div>
